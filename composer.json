@@ -1,0 +1,19 @@
+{
+    "name": "ridwanmhy/silex-hydrahon",
+    "description": "silex dengan hydrahon query builder",
+    "authors": [
+        {
+            "name": "ridwanmhy",
+            "email": "ridwanmhy@gmail.com"
+        }
+    ],
+    "require": {
+        "silex/silex": "^2.3",
+        "clancats/hydrahon": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\" : "app/"
+        }
+    }
+}
