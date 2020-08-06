@@ -5,8 +5,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Database\Connection;
 
-class C_undang2 extends Connection
+class C_undang2 
     {
+        private $hydrahon;
+        
+        public function __construct()
+        {
+            $conn = new Connection;
+            $this->hydrahon = $conn->stmt();
+        }
 
         public function index(Request $request){
             

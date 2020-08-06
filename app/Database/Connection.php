@@ -5,10 +5,10 @@ use PDO;
 
 class Connection
 {
-    protected $hydrahon;
+    private $hydrahon;
     
-    public function __construct()
-    {
+    public function __construct(){
+        
         $connection = new PDO('mysql:host=localhost;dbname=hukum', 'root', '');
 
         $this->hydrahon = new \ClanCats\Hydrahon\Builder('mysql', function ($query, $queryString, $queryParameters) use ($connection) {
@@ -19,5 +19,10 @@ class Connection
                 return $statement->fetchAll(\PDO::FETCH_ASSOC);
             }
         });
+    
+    }
+
+    public function stmt(){
+        return $this->hydrahon;
     }
 }
