@@ -38,10 +38,39 @@ class C_undang2
         public function withqb(Request $request){
 
             $id = $request->get('id');
+            $tahun = $request->get('tahun');
+            $nomor = $request->get('nomor');
+            $tentang = $request->get('tentang');
+            $created_at = $request->get('created_at');
+            $updated_at = $request->get('update_at');
+
+
+
             $table = $this->hydrahon->table('post_uus');
-            $query = $table->select(['id', 'tahun']);
+            $query = $table->select();
+            
             if(isset($id)){
-                     $query->where('id', $id);
+                $query->where('id', $id);
+            }
+
+            if(isset($tahun)){
+                $query->where('tahun', $tahun);
+            }
+
+            if(isset($nomor)){
+                $query->where('nomor', $nomor);
+            }
+
+            if(isset($tentang)){
+                $query->where('tentang', $tentang);
+            }
+
+            if(isset($created_at)){
+                $query->where('created_at', 'LIKE', $created_at.'%');
+            }
+
+            if(isset($updated_at)){
+                $query->where('updated_at', 'LIKE', $updated_at.'%');
             }
             
             return new Response(json_encode($query->execute()), 200);
