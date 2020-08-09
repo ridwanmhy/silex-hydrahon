@@ -16,7 +16,7 @@ class R_errorHandler
                     $message = 'The requested page on ' .$request->getPathInfo(). ' could not be found. ';
                     break;
                 default:
-                    $message = 'We are sorry, but something went terribly wrong.';
+                    $message = 'We are sorry, but something went terribly wrong. ' .$e;
             }
 
             return new Response($message);

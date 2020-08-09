@@ -4,6 +4,7 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Database\Connection;
+use Exception;
 
 class C_undang2 
     {
@@ -13,6 +14,16 @@ class C_undang2
         {
             $conn = new Connection;
             $this->hydrahon = $conn->stmt();
+        }
+
+        public function create(Request $request){
+
+            $table = $this->hydrahon->table('undang2');
+            $query = $table->insert(
+                [
+                ]
+            );
+
         }
 
         public function index(Request $request){
@@ -41,12 +52,8 @@ class C_undang2
             $tahun = $request->get('tahun');
             $nomor = $request->get('nomor');
             $tentang = $request->get('tentang');
-            $created_at = $request->get('created_at');
-            $updated_at = $request->get('update_at');
 
-
-
-            $table = $this->hydrahon->table('post_uus');
+            $table = $this->hydrahon->table('undang2');
             $query = $table->select();
             
             if(isset($id)){
@@ -64,16 +71,43 @@ class C_undang2
             if(isset($tentang)){
                 $query->where('tentang', $tentang);
             }
-
-            if(isset($created_at)){
-                $query->where('created_at', 'LIKE', $created_at.'%');
-            }
-
-            if(isset($updated_at)){
-                $query->where('updated_at', 'LIKE', $updated_at.'%');
-            }
             
             return new Response(json_encode($query->execute()), 200);
+
+        }
+
+        public function postJson(Request $request){
+
+            $query = $this->hydrahon->table('undang2');
+
+            $jsonBody = json_decode($request->getContent(), true);
+            $insert = $query->insert()->values($jsonBody);
+
+            try{
+
+                $insert->execute();
+
+                $data = [
+                    'status' => 'success',
+                    'data' => [
+                            $query->select($query->raw('LAST_INSERT_ID() as id'))->first()
+                            ]
+                    ];
+                $sCode = 201;
+
+            }catch(Exception $e){
+
+                $data = [
+                    'status' => 'error',
+                    'data' => [
+                        $e
+                        ]
+                    ];
+                $sCode = 500;
+            
+            }
+            
+            return new Response(json_encode($data, true), $sCode);
 
         }
     }

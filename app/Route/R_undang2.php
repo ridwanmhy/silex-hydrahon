@@ -14,5 +14,7 @@ class R_undang2
         $app->get('/sample', 'App\Controller\C_undang2::withdb');
 
         $app->get('/sampleqb', 'App\Controller\C_undang2::withqb');
+
+        $app->post('/post_json', 'App\Controller\C_undang2::postJson');
     }
 }

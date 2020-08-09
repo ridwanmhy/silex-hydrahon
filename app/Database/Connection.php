@@ -10,6 +10,7 @@ class Connection
     public function __construct(){
         
         $connection = new PDO('mysql:host=localhost;dbname=hukum', 'root', '');
+        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $this->hydrahon = new \ClanCats\Hydrahon\Builder('mysql', function ($query, $queryString, $queryParameters) use ($connection) {
             $statement = $connection->prepare($queryString);
